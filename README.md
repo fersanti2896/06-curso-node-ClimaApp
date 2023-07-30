@@ -1,4 +1,4 @@
-# Aplicación de consola interactiva - Tareas por hacer
+# Aplicación de consola interactiva - ClimaApp
 
 Se crea una aplicación de consola interactiva con búsqueda de un lugar, el cual nos da coordenadas y su información adicional. 
 
