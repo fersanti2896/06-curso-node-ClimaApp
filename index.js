@@ -1,6 +1,6 @@
 
 import 'dotenv/config'
-import { inquiererMenu, leerInput, pause } from './helpers/inquirer.js';
+import { inquiererMenu, leerInput, listarLugares, pause } from './helpers/inquirer.js';
 import { Busquedas } from './models/busquedas.js';
 
 const main = async() => {
@@ -13,16 +13,18 @@ const main = async() => {
         switch (opc) {
             case 1:
                 /* Muestra mensaje */
-                const lugar = await leerInput('Ciudad:');
+                const busqueda = await leerInput('Ciudad:');
                 /* Busca los valores */
-                await busquedas.city( lugar );
+                const lugares = await busquedas.city( busqueda );
                 /* Selecciona el lugar */
+                const id = await listarLugares( lugares );
                 /* Clima */
+                const { nombre, lng, lat } = lugares.find(lugar => lugar.id === id);
                 /* Muestra los resultados */
                 console.log('\nInformación del lugar\n'.green);
-                console.log('Ciudad:');
-                console.log('Lat:');
-                console.log('Lng:');
+                console.log('Ciudad:', nombre);
+                console.log('Lat:', lat);
+                console.log('Lng:', lng);
                 console.log('Temperatura:');
                 console.log('Mínima:');
                 console.log('Máxima:');
