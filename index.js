@@ -18,20 +18,28 @@ const main = async() => {
                 const lugares = await busquedas.city( busqueda );
                 /* Selecciona el lugar */
                 const id = await listarLugares( lugares );
-                /* Clima */
+                if( id === '0' ) continue;
                 const { nombre, lng, lat } = lugares.find(lugar => lugar.id === id);
+                /* Guardar en BD */
+                busquedas.addHistoryCity( nombre );
+                /* Clima */
+                const { desc, min, max, temp } = await busquedas.tempCity( lat, lng );
                 /* Muestra los resultados */
                 console.log('\nInformación del lugar\n'.green);
                 console.log('Ciudad:', nombre);
                 console.log('Lat:', lat);
                 console.log('Lng:', lng);
-                console.log('Temperatura:');
-                console.log('Mínima:');
-                console.log('Máxima:');
+                console.log('Clima:', desc);
+                console.log('Temperatura:', temp);
+                console.log('Mínima:', min);
+                console.log('Máxima:', max);
                 break;
             
             case 2:
-                console.log('Historial');
+                busquedas.historialCapitalizado.forEach( (lugar, index) => {
+                    const idx = `${ index + 1 }.`.green;
+                    console.log(`${ idx } ${ lugar }`);
+                });
                 break;
         }
 
